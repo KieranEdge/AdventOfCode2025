@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace Day1.Services
 {
-    public class DataAccessor
+    public static class DataAccessor
     {
+        public static List<string> TextFileToListOfInstructions(string filePath)
+        {
+            var list = new List<string>();
+            var lines = File.ReadAllLines(filePath);
+
+            foreach (var line in lines)
+            {
+                list.Add(line);
+            }
+            return list;
+        }
     }
 }
