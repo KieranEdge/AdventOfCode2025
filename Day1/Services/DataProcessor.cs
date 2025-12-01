@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,38 +18,60 @@ namespace Day1.Services
 {
     public class DataProcessor
     {
-        public void ProcessData(List<string> data) 
+        public void ProcessData(List<string> data, bool isPart1) 
         {
             bool isLeft = false;
-            long currentNumber = 50;
-            long comboNumber;
+            int currentNumber = 50;
+            int comboNumber;
             int count = 0;
 
             foreach (string line in data)
             {
                 // Getting the direction and combo number
                 isLeft = DirectionExtractor(line);
-                comboNumber = (long)Convert.ToDouble(line.Substring(1));
+                comboNumber = (int)Convert.ToInt32(line.Substring(1));
 
                 // Updating the current number based on the combo number and direction
-                if (isLeft)
+                if (isPart1)
                 {
-                    currentNumber = currentNumber - comboNumber;
+                    // Updating the combo for part 1
+                    if (isLeft)
+                    {
+                        currentNumber = currentNumber - comboNumber;
+                    }
+
+                    else
+                    {
+                        currentNumber = currentNumber + comboNumber;
+                    }
+
+                    if (currentNumber % 100 == 0)
+                    {
+                        count++;
+                    }
+
+                    Console.WriteLine($"Total number of zeroes landed on = {count}");
                 }
 
                 else
                 {
-                    currentNumber = currentNumber + comboNumber;
-                }
+                    // Find the amount of times the dial was at 0
+                    count += TimesPassedZero(isLeft, currentNumber, comboNumber);
 
-                if (currentNumber % 100 == 0)
-                {
-                    count++;
-                }
+                    // Updating the current number
+                    if (isLeft)
+                    {
+                        currentNumber = currentNumber - comboNumber;
+                    }
 
+                    else
+                    {
+                        currentNumber = currentNumber + comboNumber;
+                    }   
+                }
             }
+            Console.WriteLine($"Total number of zeroes passed or landed on = {count}");
 
-            Console.WriteLine($"Total number of zeroes = {count}");
         }
 
         public bool DirectionExtractor(string line)
@@ -63,6 +86,32 @@ namespace Day1.Services
             {
                 return false;
             }
+        }
+
+        public int TimesPassedZero(bool isLeft, int currentNumber, int comboNumber)
+        {
+            // Creating the range of numbers that the dial passes through when turning
+            int[] ints;
+            if (isLeft)
+            {
+                ints = Enumerable.Range(currentNumber - comboNumber, comboNumber).ToArray();
+            }
+            else
+            {
+                ints = Enumerable.Range(currentNumber + 1, comboNumber).ToArray();
+            }
+
+            // Counting the number of dial positions
+            int count = 0;
+            foreach(int dialNumber in ints)
+            {
+                if (dialNumber % 100 == 0)
+                {
+                    count++;
+                }
+            }
+            
+            return count;
         }
     }
 }
