@@ -8,7 +8,7 @@ namespace Day2.Services
 {
     public static class DataProcessor
     {
-        public static List<List<long>> DataTextToListsOfInts(string filePath)
+        public static List<List<long>> DataTextToListsOfLongs(string filePath)
         {
             // Initialising the lists
             List<List<long>> rangeLists = new List<List<long>>();
