@@ -3,11 +3,11 @@
 string filePath = Path.Combine(AppContext.BaseDirectory, "Data.txt");
 
 List<List<int>> batteryRows = DataProcessor.TextFileToListOfListOfInts(filePath);
+List<int> maxJoltages = new List<int>();
 
-foreach (List<int> batteryRow in batteryRows)
+foreach (var batteryRow in batteryRows)
 {
-    foreach(int battery in batteryRow)
-    {
-        Console.WriteLine(battery);
-    }
+    maxJoltages.Add(RowAnalyser.MaxJoltageCalculator(batteryRow));
 }
+
+Console.WriteLine($"Sum of max joltages = {maxJoltages.Sum()}");
