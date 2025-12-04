@@ -9,7 +9,8 @@ namespace Day4.Services
 {
     public class ArrayAnalyser
     {
-        public static void FindAcceptablePapers(char[,] array)
+        // Part 1 Method
+        public static int FindAcceptablePapers(char[,] array)
         {
             int numOfAcceptablePaper = 0;
 
@@ -31,10 +32,58 @@ namespace Day4.Services
                     }
                 }
             }
-
-            Console.WriteLine($"Acceptable paper locations = {numOfAcceptablePaper}");
+            return numOfAcceptablePaper;
         }
 
+        // Part 2 Methods
+        public static (int sum, char[,] updatedArray) FindAndRemoveAcceptablePapers(char[,] array)
+        {
+            int numOfAcceptablePaper = 0;
+
+            int rows = array.GetLength(0);
+            int cols = array.GetLength(1);
+            char[,] updatedArray = new char[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+
+                for (int j = 0; j < cols; j++)
+                {
+                    char c = array[i, j];
+                    if (c == '@')
+                    {
+                        if (isAcceptablePaper(array, i, j))
+                        {
+                            numOfAcceptablePaper++;
+                            array[i, j] = '.';
+                        }
+                    }
+                }
+            }
+            return (numOfAcceptablePaper, array);
+        }
+
+        public static int FindAcceptablePaperPart2(char[,] array)
+        {
+            int runningTotal = 0;
+            bool keepScanning = true;
+            char[,] runningArray = array;
+
+            while (keepScanning)
+            {
+                var(sum, updatedArray) = FindAndRemoveAcceptablePapers(runningArray);
+                runningTotal += sum;
+                runningArray = updatedArray;
+
+                if (sum == 0)
+                {
+                    keepScanning = false;
+                }
+            }
+            return runningTotal;
+        }
+
+        // Globally used method
         public static bool isAcceptablePaper(char[,] array, int row, int col)
         {
             // Initialising count of surrounding paper
