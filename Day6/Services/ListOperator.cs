@@ -67,6 +67,7 @@ namespace Day6.Services
             return sum;
         }
 
+
         public static long MultiplyValues(List<long> figuresToMultiply)
         {
             long sum = figuresToMultiply[0];
