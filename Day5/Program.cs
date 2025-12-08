@@ -12,6 +12,8 @@ int numberOfRanges = acceptableIngredients[0].Count;
 // Finding the number of acceptable ingredients
 int countOfAcceptableIngredients = 0;
 
+
+// Part 1
 foreach(long ingredient in ingredients)
 {
     bool ingredientFound = false;
@@ -33,4 +35,6 @@ foreach(long ingredient in ingredients)
     }
 }
 
-Console.WriteLine($"Number of acceptable ingredients = {countOfAcceptableIngredients}");
+Console.WriteLine($"Number of acceptable ingredients at Part 1 = {countOfAcceptableIngredients}");
+
+RangeConstructor.RangesListToMapOfCombinedRanges(acceptableIngredients);
