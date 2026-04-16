@@ -37,4 +37,14 @@ foreach(long ingredient in ingredients)
 
 Console.WriteLine($"Number of acceptable ingredients at Part 1 = {countOfAcceptableIngredients}");
 
-RangeConstructor.RangesListToMapOfCombinedRanges(acceptableIngredients);
+
+// Part 2
+List<List<long>> concatenatedRanges = RangeConcatenator.MergeStartEndLists(acceptableIngredients);
+List<List<long>> processedRanges = RangeConcatenator.MergeRanges(concatenatedRanges);
+long sum = 0;
+foreach(List<long> range in processedRanges)
+{
+    sum += range[1] - range[0];
+}
+
+Console.WriteLine(sum);
